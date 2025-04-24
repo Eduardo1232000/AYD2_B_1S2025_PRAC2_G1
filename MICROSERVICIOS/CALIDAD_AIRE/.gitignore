@@ -1,0 +1,7 @@
+/node_modules/
+/src/routes/creds_template.js
+.env
+node_modules
+
+prueba.http
+/.vscode/
