@@ -1,8 +1,10 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
+const API_WEATHER_URL = import.meta.env.VITE_API_WEATHER_URL
+const API_TEMPERATURE_URL = import.meta.env.VITE_API_TEMPERATURE_URL
+const API_AIR_QUALITY_URL = import.meta.env.VITE_API_AIR_QUALITY_URL
 
 export const fetchWeatherData = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/clima`, {
+    const response = await fetch(`${API_WEATHER_URL}/clima`, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -20,7 +22,7 @@ export const fetchWeatherData = async () => {
 
 export const fetchTemperatureData = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/temperatura`, {
+    const response = await fetch(`${API_TEMPERATURE_URL}/temperatura`, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -38,7 +40,7 @@ export const fetchTemperatureData = async () => {
 
 export const fetchAirQualityData = async () => {
   try {
-    const response = await fetch(`${API_BASE_URL}/calidad`, {
+    const response = await fetch(`${API_AIR_QUALITY_URL}/calidad`, {
       headers: {
         'Content-Type': 'application/json',
       },
