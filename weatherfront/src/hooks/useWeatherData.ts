@@ -29,8 +29,6 @@ export const useWeatherData = () => {
       error: null
     }
 
-    console.log('API Results:', results)
-
     results.forEach((result, index) => {
       const key = ['weather', 'temperature', 'airQuality'][index]
       if (result.status === 'fulfilled') {

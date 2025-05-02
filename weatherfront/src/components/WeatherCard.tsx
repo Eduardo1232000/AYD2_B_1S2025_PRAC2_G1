@@ -36,7 +36,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ data, isLoading }) => {
           <IconComponent size={50} strokeWidth={1.5} className="animate-pulse" />
         </div>
         <h2 className="text-xl font-bold text-white mb-1">Condiciones actuales</h2>
-        <p className="text-2xl font-medium text-white">{data.descripcion}</p>
+        <p className="text-2xl font-medium text-white">{data.descripcion || "No hay información disponible"}</p>
       </div>
     </div>
   )
