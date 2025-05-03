@@ -1,0 +1,18 @@
+services:
+  weather-service:
+    build:
+      context: ./CLIMA
+    ports:
+      - "3000:3000"
+
+  temperature-service:
+    build:
+      context: ./TEMPERATURA
+    ports:
+      - "3001:3001"
+
+  air-quality-service:
+    build:
+      context: ./CALIDAD_AIRE
+    ports:
+      - "3002:3002"
