@@ -1,0 +1,68 @@
+- name: Configurar Git, clonar repositorio, generar build de React y crear imagen Docker
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Instalar git
+      apt:
+        name: git
+        state: present
+        update_cache: yes
+    
+    - name: Clonar el repositorio privado con un token clasico de acceso personal de 
+      git:
+        repo: 'https://[token]@github.com/[usuario]/[repo].git'
+        dest: /home/storegeayd/AYD2_B_1S2025_PRAC2_G1
+        version: "main"
+        force: yes
+
+    - name: instalar curl
+      apt:
+        name: curl
+        state: present
+        update_cache: yes
+
+    - name: Descargar script de NodeSource para nodejs 20.x
+      command: curl -fsSL https://deb.nodesource.com/setup_20.x -o /tmp/nodesource_setup.sh
+
+    - name: Ejecutar script de NodeSource
+      command: bash /tmp/nodesource_setup.sh
+    
+    - name: Instalar Nodejs y npm 
+      apt:
+        name: nodejs
+        state: present
+    
+    - name: Actualizar npm a la version mas reciente 10.8.2
+      command: npm install -g npm@10.8.2
+    
+    - name: Limpiar dependencias anteriores (node_modules y package-lock.json)
+      command: rm -rf node_modules package-lock.json
+      args:
+        chdir: /home/storegeayd/AYD2_B_1S2025_PRAC2_G1/weatherfront
+
+    - name: Instalar dependencias del proyecto
+      command: npm install
+      args:
+        chdir: /home/storegeayd/AYD2_B_1S2025_PRAC2_G1/weatherfront
+
+    - name: Generar build de la aplicación React
+      command: npm run build
+      args:
+        chdir: /home/storegeayd/AYD2_B_1S2025_PRAC2_G1/weatherfront
+
+    - name: Agregar usuario al grupo Docker para evitar usar sudo
+      user:
+        name: storegeayd
+        groups: docker
+        append: yes
+
+    - name: Construir la imagen Docker desde el Dockerfile
+      command: docker build -t my-react-app --build-arg VITE_API_CALIDAD_URL=http://34.30.182.156:3000 --build-arg VITE_API_CLIMA_URL=http://34.122.70.47:3000 --build-arg VITE_API_TEMPERATURA_URL=http://34.59.174.138:3000 .
+      args:
+        chdir: /home/storegeayd/AYD2_B_1S2025_PRAC2_G1/weatherfront
+
+    - name: Ejecutar el contenedor de la imagen Docker
+      command: docker run -d -p 80:80 --name my-react-app-container my-react-app
+
+    - name: Verificar que el contenedor esté corriendo
+      command: docker ps
