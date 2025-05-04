@@ -1,6 +1,7 @@
-const API_WEATHER_URL = import.meta.env.VITE_API_WEATHER_URL
-const API_TEMPERATURE_URL = import.meta.env.VITE_API_TEMPERATURE_URL
-const API_AIR_QUALITY_URL = import.meta.env.VITE_API_AIR_QUALITY_URL
+const API_WEATHER_URL = 'http://34.122.70.47:3000'
+const API_TEMPERATURE_URL = 'http://34.59.174.138:3000'
+const API_AIR_QUALITY_URL = 'http://34.30.182.156:3000'
+
 
 export const fetchWeatherData = async () => {
   try {
